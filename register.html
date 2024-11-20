@@ -33,13 +33,14 @@
             </div>
 
             <!-- Contenedor para el mensaje de éxito o error -->
-            <div v-if="message" class="message">{{ message }}</div>
+            <div v-if="errorMessage" class="message">{{ errorMessage }}</div>
 
             <button type="submit" class="btn">Registrar</button>
         </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/vuelogin.js"></script>
 
 </body>

@@ -40,7 +40,7 @@ def login():
     else:
         return jsonify({'message': 'Credenciales incorrectas'}), 401
  
- # Registro en Flask
+ # Registro 
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
