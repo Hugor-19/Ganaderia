@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+
+    <div id="app" class="wrapper">
+        <form @submit.prevent="handleRegister">
+            <h1>Registro</h1>
+
+            <div class="input-box">
+                <input type="text" placeholder="Rellena el nombre" id="full_name" name="full_name" v-model="full_name"
+                    required>
+                <i class='bx bxs-user'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="email" placeholder="Correo Electrónico" id="email" name="email" v-model="email" required>
+                <i class='bx bx-envelope'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="password" placeholder="Contraseña" v-model="password" id="password" name="password"
+                    required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <!-- Contenedor para el mensaje de éxito o error -->
+            <div v-if="message" class="message">{{ message }}</div>
+
+            <button type="submit" class="btn">Registrar</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="/js/vuelogin.js"></script>
+
+</body>
+
+</html>

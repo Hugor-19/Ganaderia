@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Carrito de Compras</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/carro.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Menú de navegación -->
+        <header class="header">
+            <a href="#" class="logo">Ganadería</a>
+            <i class="bx bx-menu" id="menu-icon"></i>
+            <nav class="navbar">
+                <a href="#" @click.prevent="navigate('inicio')">Inicio</a>
+                <a href="#" @click.prevent="navigate('productos')">Productos</a>
+                <a href="#" @click.prevent="navigate('contacto')">Contacto</a>
+                <a href="#" @click.prevent="toggleLogin">{{ loginText }}</a>
+                <div class="icon-cart" @click="toggleCart">
+                    <i class='bx bx-shopping-bag'></i>
+                    <span v-if="cartTotalItems > 0" class="badge">{{ cartTotalItems }}</span>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Buscar" v-model="searchQuery" />
+                    <div class="btns">
+                        <i class='bx bx-search icon'></i>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Contenido dinámico -->
+        <main>
+            <section v-if="currentSection === 'inicio'" class="inicio">
+                <h1>Bienvenido a Ganadería</h1>
+                <p>Venta de ganado alta calidad para el sector ganadero.</p>
+            </section>
+
+            <!-- Seccion de producros -->
+            <section v-if="currentSection === 'productos'" class="productos">
+                <div class="product-container">
+                    <div v-for="product in filteredProducts" :key="product.id" class="product-card">
+                        <img :src="product.image" alt="Imagen del producto" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-name">{{ product.name }}</h3>
+                            <p class="product-description">{{ product.description }}</p>
+                            <p class="product-price">${{ product.price }}</p>
+                            <button @click="addToCart(product)" class="btn-add-to-cart">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contacto -->
+            <section v-if="currentSection === 'contacto'" class="contact-section">
+                <div class="form-container">
+                    <h1>Contacto</h1>
+                    <form @submit.prevent="submitContactForm">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" v-model="contactForm.name" placeholder="Ingresa tu nombre"
+                            required>
+
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" v-model="contactForm.email" placeholder="Ingresa tu correo"
+                            required>
+
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" v-model="contactForm.message" placeholder="Escribe tu mensaje aquí"
+                            required></textarea>
+
+                        <button type="submit" class="btn-submit">Enviar</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Modal del carrito -->
+        <div v-if="showCart" class="cart-modal">
+            <div class="modal-content">
+                <span class="close" @click="toggleCart">&times;</span>
+                <h2>Carrito de compras</h2>
+                <p v-if="cart.length === 0">El carrito está vacío.</p>
+                <ul>
+                    <li v-for="item in cart" :key="item.id" class="cart-item">
+                        <img :src="item.image" alt="Imagen del producto" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <span>{{ item.name }} - ${{ item.price }}</span>
+                            <div class="quantity-controls">
+                                <button @click="decreaseQuantity(item)" class="quantity-btn">-</button>
+                                <span class="quantity">{{ item.quantity }}</span>
+                                <button @click="increaseQuantity(item)" class="quantity-btn">+</button>
+                            </div>
+                            <button @click="removeFromCart(item)" class="btn-remove-from-cart">
+                                <i class='bx bxs-trash'></i>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+                <p>Total: ${{ totalCart }}</p>
+                <button @click="clearCart" v-if="cart.length > 0" class="btn-clear-cart">Vaciar Carrito</button>
+                <!-- Botón para proceder con la compra -->
+                <button @click="proceedToCheckout" v-if="cart.length > 0" class="btn-buy-now">
+                    Comprar
+                </button>
+
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Ganadería. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Vue.js, Vuex y JavaScript personalizado -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://unpkg.com/vuex@3.6.2/dist/vuex.js"></script>
+    <script src="js/home.js"></script>
+</body>
+
+</html>
